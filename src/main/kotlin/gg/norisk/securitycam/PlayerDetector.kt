@@ -25,8 +25,10 @@ object PlayerDetector {
                 .filter { !it.isSpectator }
                 .forEach {
                     entitiesInRange.add(it.uuid)
-                    if (nearbyEntities.add(it.uuid) && Config.isEnabled) {
-                        onPlayerEnter(it)
+                    if (Config.isEnabled) {
+                        if (nearbyEntities.add(it.uuid)) {
+                            onPlayerEnter(it)
+                        }
                     }
                 }
 
