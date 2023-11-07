@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "securitycam",
+  "version": "${version}",
+
+  "name": "Security Cam Mod",
+  "description": "Für Recht und Ordnung auf Craft Attack",
+  "authors": [
+    "NoRiskk"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/copyandexecute/security-cam-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/securitycam/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "gg.norisk.securitycam.SecurityCamMod"
+      }
+    ]
+  },
+  "mixins": [
+    "securitycam.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "fabric-language-kotlin": ">=${fabric_kotlin_version}"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
