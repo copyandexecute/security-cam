@@ -25,10 +25,8 @@ object PlayerDetector {
                 .filter { !it.isSpectator }
                 .forEach {
                     entitiesInRange.add(it.uuid)
-                    if (Config.isEnabled) {
-                        if (nearbyEntities.add(it.uuid)) {
-                            onPlayerEnter(it)
-                        }
+                    if (nearbyEntities.add(it.uuid)) {
+                        onPlayerEnter(it)
                     }
                 }
 
@@ -44,7 +42,7 @@ object PlayerDetector {
     }
 
     private fun onPlayerEnter(player: PlayerEntity) {
-        if (Config.data.whitelistedUser.none { it.equals(player.entityName, true) }) {
+        if (Config.data.whitelistedUser.none { it.equals(player.entityName, true) } && Config.isEnabled) {
             val text =
                 "ACHTUNG!!! Diese Raid Farm gehört Veni & NoRisk. Unbefugte Nutzung wird bei SparkOfPhoenix gemeldet."
             MinecraftClient.getInstance().networkHandler?.sendChatCommand("msg ${player.entityName} $text")
@@ -68,6 +66,10 @@ object PlayerDetector {
             return
         }
 
+        if (!Config.isEnabled) {
+            return
+        }
+
         if (!nearbyEntities.contains(player?.uuid)) {
             return
         }
@@ -87,7 +89,8 @@ object PlayerDetector {
                 text("[${pos.toShortString()}]") { }
             }, false)
 
-            val text = "Diebstahl wird bestraft. Bitte kaufen Sie es über den Shop am Spawn. :) Mit freundlichen GHGrüßen"
+            val text =
+                "Diebstahl wird bestraft. Bitte kaufen Sie es über den Shop am Spawn. :) Mit freundlichen GHGrüßen"
             if (player != null) {
                 messageCooldown[player.uuid] = System.currentTimeMillis() + 5000L
                 MinecraftClient.getInstance().networkHandler?.sendChatCommand("msg ${player.entityName} $text")
